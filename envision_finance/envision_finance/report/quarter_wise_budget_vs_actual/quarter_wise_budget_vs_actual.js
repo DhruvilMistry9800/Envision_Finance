@@ -1,7 +1,7 @@
 // Copyright (c) 2024, Dhruvil Mistry and contributors
 // For license information, please see license.txt
 
-frappe.query_reports["Vendor wise Budget vs Actual"] = {
+frappe.query_reports["Quarter wise Budget vs Actual"] = {
 	"filters": [
 		{
 			"fieldname": "company",
@@ -10,19 +10,6 @@ frappe.query_reports["Vendor wise Budget vs Actual"] = {
 			"options": "Company",
 			"default": frappe.defaults.get_user_default("Company"),
 		},	
-		{
-			"fieldname": "from_date",
-			"label": __("From Date"),
-			"fieldtype": "Date",
-			"default": frappe.datetime.add_months(frappe.datetime.get_today(), -1),
-			
-		},
-		{
-			"fieldname": "to_date",
-			"label": __("To Date"),
-			"fieldtype": "Date",
-			"default": frappe.datetime.get_today(),
-		},
 		{
 			"fieldname": "project",
 			"label": __("Project"),
@@ -37,10 +24,17 @@ frappe.query_reports["Vendor wise Budget vs Actual"] = {
 			}
 		},
 		{
-			"fieldname": "supplier",
-			"label": __("Supplier"),
+			"fieldname": "department",
+			"label": __("Department"),
 			"fieldtype": "Link",
-			"options": "Supplier",
-		},	
-	],
+			"options": "Department",
+			get_query:function(){
+				return {
+					filters:{
+						company : frappe.query_report.get_filter_value('company')
+					}
+				}
+			}
+		},
+	]
 };
